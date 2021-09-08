@@ -1,8 +1,9 @@
 <main>
   <div class="container">
     <div class="row">
-      <div class="col-8 offset-2" style="margin-top:100px">
-        <h2>Usuários</h2>
+      <div class="col-8 offset-2 text-center" style="margin-top:150px">
+        <h2 style="float: left; margin-bottom: 25px;">Gerenciando Usuários</h2>
+        <a style="float: right; margin-top: 15px;" href="/user/create/">Adicionar Usuário</a>
         <table class="table">
           <thead>
             <tr>
@@ -21,7 +22,6 @@
             <?php }?>
           </tbody>
         </table>
-        <a href="/user/create">Adicionar Usuário</a>
       </div>
     </div>
   </div>
