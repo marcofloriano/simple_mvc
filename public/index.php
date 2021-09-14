@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class="col-8 offset-2 text-center" style="margin-top:10px">
-    <a href="/">Dashboard</a> |
+    <a href="/home">Dashboard</a> |
     <a href="/">Sair</a>
   </div> 
 
