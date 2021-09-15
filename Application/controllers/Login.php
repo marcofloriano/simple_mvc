@@ -5,11 +5,11 @@ use Application\core\Controller;
 class Login extends Controller
 {
   /*
-  * chama a view index.php do  /login   ou somente   /
+  * chama a view home/index.php do /login ou somente /
   */
   public function index()
   {
-    $this->view('login/index');
+    $this->view('home/index');
   }
 
   /**
@@ -20,15 +20,22 @@ class Login extends Controller
   * @param  int   $id   Identificado do usuário.
   */
   public function authenticate()
-  {   
+  {
     $Logins = $this->model('Logins');
     $authenticate = $Logins::authenticateUser($_POST);
     if($authenticate) {
-      echo $authenticate['0']['usuario'];
+      header('Location: /');
     } else {
       echo "Usuário ou senha inválidos!";
-    }
-    
+    }    
+  }
+
+  public function logout()
+  {
+    session_start();
+    session_destroy();
+    // Redirect to the logout page:
+    header('Location: /');
   }
 
 }

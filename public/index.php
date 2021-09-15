@@ -1,3 +1,11 @@
+<?php
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the login page...
+if( !isset($_SESSION['loggedin']) ) {
+  header('Location: /index.html');
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -8,7 +16,8 @@
   <body>
     <div class="col-8 offset-2 text-center" style="margin-top:10px">
     <a href="/home">Dashboard</a> |
-    <a href="/">Sair</a>
+    <a href="/login/logout">Sair</a>
+    <br> Usuário: <?php echo $_SESSION['name']; ?>
   </div> 
 
   <?php
