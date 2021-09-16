@@ -26,7 +26,7 @@ class Login extends Controller
     if($authenticate) {
       header('Location: /');
     } else {
-      echo "Usuário ou senha inválidos!";
+      header('Location: /login.php?erro=true');
     }    
   }
 
@@ -34,7 +34,7 @@ class Login extends Controller
   {
     session_destroy();
     // Redirect to the logout page:
-    header('Location: /index.html');
+    header('Location: /login.php');
   }
 
 }

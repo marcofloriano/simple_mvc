@@ -12,6 +12,11 @@
           <div class="col-8 offset-2 text-center" style="margin-top:150px">
             <h1 style="float: center; margin-bottom: -25px;">Login</h1>
             <br><br>
+            <?php 
+              if(isset($_GET['erro'])) {
+                echo "Erro: usuário e/ou senha inválidos!";
+              }
+            ?>
             <hr>
           </div>
           <div class="col-8 offset-2 text-center" style="margin-top:20px; font-size: 22px;">
