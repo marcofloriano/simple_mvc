@@ -32,10 +32,9 @@ class Login extends Controller
 
   public function logout()
   {
-    session_start();
     session_destroy();
     // Redirect to the logout page:
-    header('Location: /');
+    header('Location: /index.html');
   }
 
 }

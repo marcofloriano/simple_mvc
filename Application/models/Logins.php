@@ -26,7 +26,6 @@ class Logins
     $usuario = $result->fetchAll(PDO::FETCH_ASSOC);
 
     if($usuario['0']['usuario'] == $username && $usuario['0']['senha'] == $password) {
-      session_start();
       session_regenerate_id();
       $_SESSION['loggedin'] = TRUE;
       $_SESSION['name'] = $usuario['0']['nome'];

@@ -3,8 +3,11 @@
 session_start();
 // If the user is not logged in redirect to the login page...
 if( !isset($_SESSION['loggedin']) ) {
-  header('Location: /index.html');
+  header('Location: /index.html');  
 }
+require '../Application/autoload.php';
+use Application\core\App;
+use Application\core\Controller;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -17,17 +20,9 @@ if( !isset($_SESSION['loggedin']) ) {
     <div class="col-8 offset-2 text-center" style="margin-top:10px">
     <a href="/home">Dashboard</a> |
     <a href="/login/logout">Sair</a>
-    <br> Usuário: <?php echo $_SESSION['name']; ?>
   </div> 
-
-  <?php
-    require '../Application/autoload.php';
-
-    use Application\core\App;
-    use Application\core\Controller;
-
+  <?php 
     $app = new App();
-
   ?>
   <script src="/assets/js/jquery.slim.min.js"></script>
   <script src="/assets/js/bootstrap.min.js"></script>
