@@ -62,4 +62,24 @@ VALUES ('$userName')");
     $result = $conn->executeQuery("UPDATE usuarios SET nome='$userName' WHERE id = $userId");
   }
 
+  public static function authenticateUser($user)
+  {
+    $username = $user['username'];
+    $password = $user['password'];
+
+    $conn = new Database();
+    $result = $conn->executeQuery('SELECT * FROM usuarios WHERE usuario = :USERNAME LIMIT 1', array(
+      ':USERNAME' => $username
+    ));
+    $usuario = $result->fetchAll(PDO::FETCH_ASSOC);
+
+    if($usuario['0']['usuario'] == $username && $usuario['0']['senha'] == $password) {
+      session_regenerate_id();
+      $_SESSION['loggedin'] = TRUE;
+      $_SESSION['name'] = $usuario['0']['nome'];
+      $_SESSION['id'] = $usuario['0']['id'];
+      return $usuario;
+    }
+  }
+
 }

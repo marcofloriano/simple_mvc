@@ -20,7 +20,7 @@
             <hr>
           </div>
           <div class="col-8 offset-2 text-center" style="margin-top:20px; font-size: 22px;">
-            <form action="/login/authenticate" method="post">
+            <form action="/home/authenticate" method="post">
               <label for="username">
                 <i class="fas fa-user"></i>
               </label>

@@ -19,7 +19,7 @@ use Application\core\Controller;
   <body>
     <div class="col-8 offset-2 text-center" style="margin-top:10px">
     <a href="/home">Dashboard</a> |
-    <a href="/login/logout">Sair</a>
+    <a href="/home/logout">Sair</a>
   </div> 
   <?php 
     $app = new App();
