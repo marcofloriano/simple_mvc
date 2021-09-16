@@ -4,7 +4,6 @@ namespace Application\core;
 
 use Application\models\Users;
 use Application\models\Posts;
-use Application\models\Logins;
 
 /**
 * Esta classe é responsável por instanciar um model e chamar a view correta
