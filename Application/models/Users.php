@@ -37,12 +37,15 @@ class Users
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public static function insertUser($user)
+  public static function insertUser($usuario)
   {
-    $userName = $user['nome'];
+    $usuarioNome = $usuario['nome'];
+    $usuarioUsuario = $usuario['usuario'];
+    $usuarioSenha = password_hash($usuario['senha'], PASSWORD_DEFAULT);
+    $usuarioEmail = $usuario['email'];
     $conn = new Database();
-    $result = $conn->executeQuery("INSERT INTO usuarios (nome)
-VALUES ('$userName')");    
+    $result = $conn->executeQuery("INSERT INTO usuarios (nome, usuario, senha, email)
+VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");    
   }
 
   public static function deleteById(int $id)
@@ -73,12 +76,14 @@ VALUES ('$userName')");
     ));
     $usuario = $result->fetchAll(PDO::FETCH_ASSOC);
 
-    if($usuario['0']['usuario'] == $username && $usuario['0']['senha'] == $password) {
-      session_regenerate_id();
-      $_SESSION['loggedin'] = TRUE;
-      $_SESSION['name'] = $usuario['0']['nome'];
-      $_SESSION['id'] = $usuario['0']['id'];
-      return $usuario;
+    if($usuario['0']['usuario'] == $username) {
+      if( password_verify( $password,$usuario['0']['senha'] ) ) {
+        session_regenerate_id();
+        $_SESSION['loggedin'] = TRUE;
+        $_SESSION['name'] = $usuario['0']['nome'];
+        $_SESSION['id'] = $usuario['0']['id'];
+        return $usuario;
+      }
     }
   }
 
