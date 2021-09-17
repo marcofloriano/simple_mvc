@@ -60,7 +60,7 @@ class Database extends PDO
     $stmt = $this->conn->prepare($query);
     $this->mountQuery($stmt, $parameters);
     $stmt->execute();
-    // print_r($stmt->errorInfo()); //visualizar erro na query
+    //print_r($stmt->errorInfo()); //visualizar erro na query
     return $stmt;
   }
 

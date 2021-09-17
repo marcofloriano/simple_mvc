@@ -11,7 +11,10 @@
           <form method="post" action="/user/update" >
             <?php foreach ($data['user'] as $user) { ?>
           <input type="hidden" id="id" name="id" value="<?= $user['id'] ?>">
-          <input type="text" id="nome" name="nome" value="<?= $user['nome'] ?>" placeholder="Nome do usuário"><br><br>
+          <input type="text" id="nome" name="nome" value="<?= $user['nome'] ?>" placeholder="Nome Completo"><br><br>
+          <input type="text" id="usuario" name="usuario" value="<?= $user['usuario'] ?>" placeholder="Usuário"><br><br>
+          <input type="email" id="email" name="email" value="<?= $user['email'] ?>" placeholder="Email"><br><br>
+          <input type="password" id="senha" name="senha" placeholder="Nova Senha"><br><br>
           <input type="submit" name="salvar" value="Salvar">
           <?php }?>
         </form>

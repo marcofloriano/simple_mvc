@@ -56,13 +56,31 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
     ));
   }
 
-  public static function updateUser($user)
+  public static function updateUser($usuario)
   {
-    $userId = $user['id'];
-    $userName = $user['nome'];
+    $usuarioId = $usuario['id'];
+    $usuarioNome = $usuario['nome'];
+    $usuarioUsuario = $usuario['usuario'];    
+    $usuarioEmail = $usuario['email'];
+    $usuarioSenha = $usuario['senha'];
+    if($usuarioSenha != '') {
+      self::resetPassword($usuarioId, $usuarioSenha);
+    }    
 
     $conn = new Database();
-    $result = $conn->executeQuery("UPDATE usuarios SET nome='$userName' WHERE id = $userId");
+    $result = $conn->executeQuery("UPDATE usuarios SET nome='$usuarioNome', usuario='$usuarioUsuario', email='$usuarioEmail' WHERE id = $usuarioId");
+  }
+
+  public static function resetPassword($usuarioId, $usuarioSenha) 
+  {
+    $conn = new Database();
+    $result = $conn->executeQuery('SELECT * FROM usuarios WHERE id = :ID LIMIT 1', array(
+      ':ID' => $usuarioId
+    ));
+    $usuario = $result->fetchAll(PDO::FETCH_ASSOC);
+    
+    $usuarioSenha = password_hash($usuarioSenha, PASSWORD_DEFAULT);
+    $conn->executeQuery("UPDATE usuarios SET senha='$usuarioSenha' WHERE id = $usuarioId");
   }
 
   public static function authenticateUser($user)
