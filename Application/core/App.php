@@ -27,7 +27,7 @@ class App
   */
   private function parseUrl()
   {
-    $REQUEST_URI = explode('/', substr(filter_input(INPUT_SERVER, 'REQUEST_URI'), 1));
+    $REQUEST_URI = explode('/', substr(filter_var($_SERVER['REQUEST_URI'],FILTER_UNSAFE_RAW, FILTER_NULL_ON_FAILURE), 1));
     return $REQUEST_URI;
   }
   /**
