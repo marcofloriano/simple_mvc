@@ -44,8 +44,10 @@ class Users
     $usuarioSenha = password_hash($usuario['senha'], PASSWORD_DEFAULT);
     $usuarioEmail = $usuario['email'];
     $conn = new Database();
-    $result = $conn->executeQuery("INSERT INTO usuarios (nome, usuario, senha, email)
-VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");    
+    if($result = $conn->executeQuery("INSERT INTO usuarios (nome, usuario, senha, email)
+VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')")) {
+      return true;
+    }    
   }
 
   public static function deleteById(int $id)
