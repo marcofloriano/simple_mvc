@@ -53,9 +53,12 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')")) 
   public static function deleteById(int $id)
   {
     $conn = new Database();
-    $result = $conn->executeQuery('DELETE FROM `usuarios` WHERE id = :ID LIMIT 1', array(
+    if($result = $conn->executeQuery('DELETE FROM `usuarios` WHERE id = :ID LIMIT 1', array(
       ':ID' => $id
-    ));
+    ))) {
+      return true;
+    }
+
   }
 
   public static function updateUser($usuario)
@@ -70,7 +73,9 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')")) 
     }    
 
     $conn = new Database();
-    $result = $conn->executeQuery("UPDATE usuarios SET nome='$usuarioNome', usuario='$usuarioUsuario', email='$usuarioEmail' WHERE id = $usuarioId");
+    if($result = $conn->executeQuery("UPDATE usuarios SET nome='$usuarioNome', usuario='$usuarioUsuario', email='$usuarioEmail' WHERE id = $usuarioId")) {
+      return true;
+    }
   }
 
   public static function resetPassword($usuarioId, $usuarioSenha) 
@@ -82,7 +87,9 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')")) 
     $usuario = $result->fetchAll(PDO::FETCH_ASSOC);
     
     $usuarioSenha = password_hash($usuarioSenha, PASSWORD_DEFAULT);
-    $conn->executeQuery("UPDATE usuarios SET senha='$usuarioSenha' WHERE id = $usuarioId");
+    if($conn->executeQuery("UPDATE usuarios SET senha='$usuarioSenha' WHERE id = $usuarioId")) {
+      return true;
+    }
   }
 
   public static function authenticateUser($user)

@@ -27,4 +27,51 @@ class UserTest extends \PHPUnit\Framework\TestCase
 
     	$this->assertTrue($user->insertUser($usuario));
 	}
+
+	public function testThatWeCanUpdateUser()
+	{
+		$user = new \Application\models\Users;
+		$users = $user->findAll();
+		$lastUser = end($users);
+		$lastUser['nome'] = 'M F Teste';
+		$lastUser['usuario'] = 'mfteste';
+		$lastUser['email'] = 'mfteste@setor9.com.br';
+		$lastUser['senha'] = 'mfteste.123@#';
+
+		$this->assertTrue($user->updateUser($lastUser));
+	}
+
+	public function testThatWeCanResetUserPassword()
+	{
+		$user = new \Application\models\Users;
+		$users = $user->findAll();
+		$lastUser = end($users);
+
+		$this->assertTrue($user->resetPassword($lastUser['id'], 'floriano.123'));
+	}
+
+	public function testThatWeCanAuthenticateUser()
+	{
+		$user = new \Application\models\Users;
+		$users = $user->findAll();
+		$lastUser = end($users);
+		$lastUser['username'] = $lastUser['usuario'];
+		$lastUser['password'] = $lastUser['senha'];
+
+		$this->assertNotEmpty($user->authenticateUser($lastUser));
+	}
+
+	/*
+
+	public function testThatWeCanDeleteUser()
+	{
+		$user = new \Application\models\Users;
+		$users = $user->findAll();
+		$lastUser = end($users);
+		$id = $lastUser['id'];
+
+		$this->assertTrue($user->deleteById($id));
+	}
+
+	*/
 }
