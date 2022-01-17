@@ -56,12 +56,12 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$users = $user->findAll();
 		$lastUser = end($users);
 		$lastUser['username'] = $lastUser['usuario'];
-		$lastUser['password'] = $lastUser['senha'];
+		$lastUser['password'] = 'floriano.123';
 
-		$this->assertNotEmpty($user->authenticateUser($lastUser));
+		$checkUser = $user->authenticateUser($lastUser);
+
+		$this->assertEquals($checkUser[0]['id'], $lastUser['id']);
 	}
-
-	/*
 
 	public function testThatWeCanDeleteUser()
 	{
@@ -72,6 +72,4 @@ class UserTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertTrue($user->deleteById($id));
 	}
-
-	*/
 }
