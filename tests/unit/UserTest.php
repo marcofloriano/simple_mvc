@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 class UserTest extends \PHPUnit\Framework\TestCase
 {
