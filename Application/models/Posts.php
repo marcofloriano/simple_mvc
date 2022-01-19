@@ -42,16 +42,20 @@ class Posts
     $postTitulo = $post['titulo'];
     $postTexto = $post['texto'];
     $conn = new Database();
-    $result = $conn->executeQuery("INSERT INTO posts (titulo, texto)
-VALUES ('$postTitulo', '$postTexto')");    
+    if( $result = $conn->executeQuery("INSERT INTO posts (titulo, texto)
+VALUES ('$postTitulo', '$postTexto')") ) {
+      return true;
+    }    
   }
 
   public static function deleteById(int $id)
   {
     $conn = new Database();
-    $result = $conn->executeQuery('DELETE FROM `posts` WHERE id = :ID LIMIT 1', array(
+    if($result = $conn->executeQuery('DELETE FROM `posts` WHERE id = :ID LIMIT 1', array(
       ':ID' => $id
-    ));
+    )) ) {
+      return true;
+    }
   }
 
   public static function updatePost($post)
@@ -61,7 +65,9 @@ VALUES ('$postTitulo', '$postTexto')");
     $postTexto = $post['texto'];
 
     $conn = new Database();
-    $result = $conn->executeQuery("UPDATE posts SET titulo='$postTitulo', texto='$postTexto' WHERE id = $postId");
+    if($result = $conn->executeQuery("UPDATE posts SET titulo='$postTitulo', texto='$postTexto' WHERE id = $postId")) {
+      return true;
+    }
   }
 
 }
