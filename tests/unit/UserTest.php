@@ -6,7 +6,11 @@ class UserTest extends \PHPUnit\Framework\TestCase
 	public function testThatWeCanFindAllUsers()
 	{
 		$user = new \Application\models\Users;
-		$this->assertNotEmpty($user->findAll());
+		$users = $user->findAll();
+		foreach( $users as $user ) {
+			$this->assertArrayHasKey( 'id' ,$user);
+		}
+
 	}
 
 	public function testThatWeCanFindUserById()
@@ -14,7 +18,8 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$user = new \Application\models\Users;
 		$users = $user->findAll();
 		$id = $users[0]['id'];
-		$this->assertNotEmpty($user->findById($id));
+		$newUser = $user->findById($id);
+		$this->assertArrayHasKey( 'id' , $newUser[0]);
 	}
 
 	public function testThatWeCanInsertUser()
