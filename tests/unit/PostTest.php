@@ -5,7 +5,10 @@ class PostTest extends \PHPUnit\Framework\TestCase
 	public function testThatWeCanFindAllPosts()
 	{
 		$post = new \Application\models\Posts;
-		$this->assertNotEmpty($post->findAll());
+		$posts = $post->findAll();
+		foreach ($posts as $post) {
+			$this->assertArrayHasKey( 'id' ,$post);
+		}
 	}
 
 	public function testThatWeCanFindPostById()
@@ -13,7 +16,8 @@ class PostTest extends \PHPUnit\Framework\TestCase
 		$post = new \Application\models\Posts;
 		$posts = $post->findAll();
 		$id = $posts[0]['id'];
-		$this->assertNotEmpty($post->findById($id));
+		$newPost = $post->findById($id);
+		$this->assertArrayHasKey( 'id' , $newPost[0]);
 	}
 
 	public function testThatWeCanInsertPost()
