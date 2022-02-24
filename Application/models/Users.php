@@ -43,11 +43,11 @@ class Users
     $usuarioUsuario = $usuario['usuario'];
     $usuarioSenha = password_hash($usuario['senha'], PASSWORD_DEFAULT);
     $usuarioEmail = $usuario['email'];
+    
     $conn = new Database();
-    if($result = $conn->executeQuery("INSERT INTO usuarios (nome, usuario, senha, email)
-VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')")) {
-      return true;
-    }    
+    $result = $conn->executeQuery("INSERT INTO usuarios (nome, usuario, senha, email)
+VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
+    return $conn->response;    
   }
 
   public static function deleteById(int $id)
@@ -58,7 +58,6 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')")) 
     ))) {
       return true;
     }
-
   }
 
   public static function updateUser($usuario)

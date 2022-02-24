@@ -10,22 +10,6 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->user = new \Application\models\Users;
 	}
 
-	public function testThatWeCanFindAllUsers()
-	{
-		$usuarios = $this->user->findAll();
-		foreach( $usuarios as $usuario ) {
-			$this->assertArrayHasKey( 'id' ,$usuario);
-		}
-	}
-
-	public function testThatWeCanFindUserById()
-	{
-		$usuarios = $this->user->findAll();
-		$id = $usuarios[0]['id'];
-		$newUser = $this->user->findById($id);
-		$this->assertArrayHasKey( 'id' , $newUser[0]);
-	}
-
 	public function testThatWeCanInsertUser()
 	{
 		$usuario = array();
@@ -62,6 +46,22 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$lastUser['password'] = 'floriano.123';
 		$checkUser = $this->user->authenticateUser($lastUser);
 		$this->assertEquals($checkUser[0]['id'], $lastUser['id']);
+	}
+
+	public function testThatWeCanFindAllUsers()
+	{
+		$usuarios = $this->user->findAll();
+		foreach( $usuarios as $usuario ) {
+			$this->assertArrayHasKey( 'id' ,$usuario);
+		}
+	}
+
+	public function testThatWeCanFindUserById()
+	{
+		$usuarios = $this->user->findAll();
+		$id = $usuarios[0]['id'];
+		$newUser = $this->user->findById($id);
+		$this->assertArrayHasKey( 'id' , $newUser[0]);
 	}
 
 	public function testThatWeCanDeleteUser()

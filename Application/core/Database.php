@@ -14,6 +14,8 @@ class Database extends PDO
 
   // armazena a conexão
   private $conn;
+  // armazena a resposta da query
+  public $response;
 
   public function __construct()
   {
@@ -59,7 +61,7 @@ class Database extends PDO
   {
     $stmt = $this->conn->prepare($query);
     $this->mountQuery($stmt, $parameters);
-    $stmt->execute();
+    $this->response = $stmt->execute();
     //print_r($stmt->errorInfo()); //visualizar erro na query
     return $stmt;
   }
