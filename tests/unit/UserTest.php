@@ -27,7 +27,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$lastUser['nome'] = 'M F Teste';
 		$lastUser['usuario'] = 'mfteste';
 		$lastUser['email'] = 'mfteste@setor9.com.br';
-		$lastUser['senha'] = 'mfteste.123@#';
+		$lastUser['senha'] = 'mf123';
 		$this->assertTrue($this->user->updateUser($lastUser));
 	}
 
@@ -71,4 +71,5 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$id = $lastUser['id'];
 		$this->assertTrue($this->user->deleteById($id));
 	}
+
 }

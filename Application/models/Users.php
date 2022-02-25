@@ -72,9 +72,8 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
     }    
 
     $conn = new Database();
-    if($result = $conn->executeQuery("UPDATE usuarios SET nome='$usuarioNome', usuario='$usuarioUsuario', email='$usuarioEmail' WHERE id = $usuarioId")) {
-      return true;
-    }
+    $result = $conn->executeQuery("UPDATE usuarios SET nome='$usuarioNome', usuario='$usuarioUsuario', email='$usuarioEmail' WHERE id = $usuarioId");
+    return $conn->response;
   }
 
   public static function resetPassword($usuarioId, $usuarioSenha) 
