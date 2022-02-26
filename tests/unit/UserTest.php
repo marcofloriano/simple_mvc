@@ -41,12 +41,14 @@ class UserTest extends \PHPUnit\Framework\TestCase
 	public function testThatWeCanAuthenticateUser()
 	{
 		$usuarios = $this->user->findAll();
-		$lastUser = end($usuarios);
-		$lastUser['username'] = $lastUser['usuario'];
-		$lastUser['password'] = 'floriano.123';
-		$checkUser = $this->user->authenticateUser($lastUser);
-		$this->assertEquals($checkUser[0]['id'], $lastUser['id']);
+		$usuario = end($usuarios);
+		$usuario['username'] = 'mfteste';
+		$usuario['password'] = 'floriano.123';
+		$checarUsuario = $this->user->authenticateUser($usuario);
+		$this->assertEquals($checarUsuario[0]['id'], $usuario['id']);
 	}
+
+	/*
 
 	public function testThatWeCanFindAllUsers()
 	{
@@ -71,5 +73,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$id = $lastUser['id'];
 		$this->assertTrue($this->user->deleteById($id));
 	}
+
+	*/
 
 }

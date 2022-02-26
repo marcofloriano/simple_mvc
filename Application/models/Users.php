@@ -78,16 +78,10 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
 
   public static function resetPassword($usuarioId, $usuarioSenha) 
   {
-    $conn = new Database();
-    $result = $conn->executeQuery('SELECT * FROM usuarios WHERE id = :ID LIMIT 1', array(
-      ':ID' => $usuarioId
-    ));
-    $usuario = $result->fetchAll(PDO::FETCH_ASSOC);
-    
+    $conn = new Database();    
     $usuarioSenha = password_hash($usuarioSenha, PASSWORD_DEFAULT);
-    if($conn->executeQuery("UPDATE usuarios SET senha='$usuarioSenha' WHERE id = $usuarioId")) {
-      return true;
-    }
+    $conn->executeQuery("UPDATE usuarios SET senha='$usuarioSenha' WHERE id = $usuarioId");
+    return $conn->response; 
   }
 
   public static function authenticateUser($user)
