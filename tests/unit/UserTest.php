@@ -48,15 +48,16 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->assertEquals($checarUsuario[0]['id'], $usuario['id']);
 	}
 
-	/*
-
 	public function testThatWeCanFindAllUsers()
 	{
-		$usuarios = $this->user->findAll();
-		foreach( $usuarios as $usuario ) {
-			$this->assertArrayHasKey( 'id' ,$usuario);
-		}
+		//$usuarios = $this->user->findAll();
+		//foreach( $usuarios as $usuario ) {
+		//	$this->assertArrayHasKey( 'id' ,$usuario);
+		//}
+		$this->assertTrue($this->user->findAll());
 	}
+
+	/*
 
 	public function testThatWeCanFindUserById()
 	{
