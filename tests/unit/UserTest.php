@@ -10,6 +10,8 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->user = new \Application\models\Users;
 	}
 
+	/*
+
 	public function testThatWeCanInsertUser()
 	{
 		$usuario = array();
@@ -48,13 +50,14 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->assertEquals($checarUsuario[0]['id'], $usuario['id']);
 	}
 
+	*/
+
 	public function testThatWeCanFindAllUsers()
 	{
-		//$usuarios = $this->user->findAll();
-		//foreach( $usuarios as $usuario ) {
-		//	$this->assertArrayHasKey( 'id' ,$usuario);
-		//}
-		$this->assertTrue($this->user->findAll());
+		$usuarios = $this->user->findAll();
+		$usuario = end($usuarios);
+		$this->assertEquals($usuario['usuario'], 'mfteste');
+		//$this->assertTrue($this->user->findAll());
 	}
 
 	/*

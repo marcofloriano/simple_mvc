@@ -17,11 +17,7 @@ class Users
   {
     $conn = new Database();
     $result = $conn->executeQuery('SELECT * FROM usuarios');
-    if($conn->response){
-      return $result->fetchAll(PDO::FETCH_ASSOC);
-    }
-    return false;
-    //return $result->fetchAll(PDO::FETCH_ASSOC);
+    return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
   /**
