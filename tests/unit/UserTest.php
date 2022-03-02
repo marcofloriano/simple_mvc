@@ -10,35 +10,69 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->user = new \Application\models\Users;
 	}
 
-	/*
-
-	public function testThatWeCanInsertUser()
+	public function testDeleteLastUser()
 	{
+		//inserir usuario no banco de dados
 		$usuario = array();
-		$usuario['nome'] = 'Marco Floriano Teste';
-    	$usuario['usuario'] = 'marcofloriano_teste';
-    	$usuario['senha'] = 'teste.123';
-    	$usuario['email'] = 'marcofloriano@gmail.com';
-    	$this->assertTrue($this->user->insertUser($usuario));
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+    	$this->user->insertUser($usuario);
+
+    	//realizar teste
+		$this->assertTrue($this->user->deleteLastUser());
 	}
 
-	public function testThatWeCanUpdateUser()
+	public function testInsertUser()
 	{
+		//inserir usuario no banco de dados
+		$usuario = array();
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+
+    	//realizar teste
+    	$this->assertTrue($this->user->insertUser($usuario));
+
+    	//remover usuario
+    	$this->user->deleteLastUser();
+	}
+
+	public function testUpdateUser()
+	{
+		//inserir usuario no banco de dados
+		$usuario = array();
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+    	$this->user->insertUser($usuario);
+
+    	//realizar teste
 		$usuarios = $this->user->findAll();
 		$lastUser = end($usuarios);
-		$lastUser['nome'] = 'M F Teste';
-		$lastUser['usuario'] = 'mfteste';
-		$lastUser['email'] = 'mfteste@setor9.com.br';
-		$lastUser['senha'] = 'mf123';
+		$lastUser['nome'] = 'Marco Teste 2';
+		$lastUser['usuario'] = 'marcoteste2';
+		$lastUser['senha'] = 'teste';
+		$lastUser['email'] = 'marcoteste2@gmail.com';
 		$this->assertTrue($this->user->updateUser($lastUser));
+
+		//remover usuario
+    	$this->user->deleteLastUser();
 	}
 
-	public function testThatWeCanResetUserPassword()
+	/*
+
+	public function testResetUserPassword()
 	{
 		$usuarios = $this->user->findAll();
 		$lastUser = end($usuarios);
 		$this->assertTrue($this->user->resetPassword($lastUser['id'], 'floriano.123'));
 	}
+
+	/*
 
 	public function testThatWeCanAuthenticateUser()
 	{
@@ -50,14 +84,12 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->assertEquals($checarUsuario[0]['id'], $usuario['id']);
 	}
 
-	*/
+	
 
 	public function testThatWeCanFindAllUsers()
 	{
-		$usuarios = $this->user->findAll();
-		$usuario = end($usuarios);
-		$this->assertEquals($usuario['usuario'], 'mfteste');
-		//$this->assertTrue($this->user->findAll());
+		
+		$this->assertCount(2, $this->user->findAll());
 	}
 
 	/*

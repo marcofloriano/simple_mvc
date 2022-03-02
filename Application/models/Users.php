@@ -50,6 +50,13 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
     return $conn->response;    
   }
 
+  public static function deleteLastUser()
+  {
+    $conn = new Database();
+    $result = $conn->executeQuery('DELETE FROM `usuarios` ORDER BY id DESC LIMIT 1');
+    return $conn->response;
+  }
+
   public static function deleteById(int $id)
   {
     $conn = new Database();
