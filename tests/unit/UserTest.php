@@ -10,7 +10,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->user = new \Application\models\Users;
 	}
 
-	public function testDeleteLastUser()
+	public function testFindUserById()
 	{
 		//inserir usuario no banco de dados
 		$usuario = array();
@@ -21,7 +21,35 @@ class UserTest extends \PHPUnit\Framework\TestCase
     	$this->user->insertUser($usuario);
 
     	//realizar teste
-		$this->assertTrue($this->user->deleteLastUser());
+    	$usuarios = $this->user->findAll();
+    	$usuarioTeste = end($usuarios);
+    	var_dump($this->user->findById($usuarioTeste['id']));
+    	var_dump($usuarioTeste);
+    	//$this->assertEquals($usuarioTeste, $this->user->findById($usuarioTeste['id']));
+
+    	//remover usuario
+    	$this->user->deleteById($usuarioTeste['id']);
+	}
+
+	/*
+
+	public function testFindAllUsers()
+	{
+		//inserir usuario no banco de dados
+		$usuario = array();
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+    	$this->user->insertUser($usuario);
+		
+		//realizar teste
+		$this->assertGreaterThan(1, count($this->user->findAll()));
+
+		//remover usuario    	
+    	$usuarios = $this->user->findAll();
+		$usuarioTeste = end($usuarios);
+    	$this->user->deleteById($usuarioTeste['id']);
 	}
 
 	public function testInsertUser()
@@ -36,8 +64,10 @@ class UserTest extends \PHPUnit\Framework\TestCase
     	//realizar teste
     	$this->assertTrue($this->user->insertUser($usuario));
 
-    	//remover usuario
-    	$this->user->deleteLastUser();
+    	//remover usuario    	
+    	$usuarios = $this->user->findAll();
+		$usuarioTeste = end($usuarios);
+    	$this->user->deleteById($usuarioTeste['id']);    	    	
 	}
 
 	public function testUpdateUser()
@@ -52,55 +82,59 @@ class UserTest extends \PHPUnit\Framework\TestCase
 
     	//realizar teste
 		$usuarios = $this->user->findAll();
-		$lastUser = end($usuarios);
-		$lastUser['nome'] = 'Marco Teste 2';
-		$lastUser['usuario'] = 'marcoteste2';
-		$lastUser['senha'] = 'teste';
-		$lastUser['email'] = 'marcoteste2@gmail.com';
-		$this->assertTrue($this->user->updateUser($lastUser));
+		$usuarioTeste = end($usuarios);
+		$usuarioTeste['nome'] = 'Marco Teste 2';
+		$usuarioTeste['usuario'] = 'marcoteste2';
+		$usuarioTeste['senha'] = 'teste';
+		$usuarioTeste['email'] = 'marcoteste2@gmail.com';
+		$this->assertTrue($this->user->updateUser($usuarioTeste));
 
 		//remover usuario
-    	$this->user->deleteLastUser();
+    	$this->user->deleteById($usuarioTeste['id']);  
+	}
+
+	public function testResetPassword()
+	{	
+		//inserir usuario no banco de dados
+		$usuario = array();
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+    	$this->user->insertUser($usuario);	
+
+		//realizar teste
+		$usuarios = $this->user->findAll();
+		$usuarioTeste = end($usuarios);
+		$this->assertTrue($this->user->resetPassword($usuarioTeste['id'], 'floriano.123'));
+
+		//remover usuario
+    	$this->user->deleteById($usuarioTeste['id']); 
+	}
+
+	public function testAuthenticateUser()
+	{
+		//inserir usuario no banco de dados
+		$usuario = array();
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+    	$this->user->insertUser($usuario);	
+
+		//realizar teste
+		$usuarios = $this->user->findAll();
+		$usuarioTeste = end($usuarios);
+		$usuarioTeste['username'] = 'marcoteste';
+		$usuarioTeste['password'] = 'teste';
+		$autenticar = $this->user->authenticateUser($usuarioTeste);
+		$this->assertEquals($autenticar[0]['id'], $usuarioTeste['id']);
+
+		//remover usuario
+    	$this->user->deleteById($usuarioTeste['id']); 
 	}
 
 	/*
-
-	public function testResetUserPassword()
-	{
-		$usuarios = $this->user->findAll();
-		$lastUser = end($usuarios);
-		$this->assertTrue($this->user->resetPassword($lastUser['id'], 'floriano.123'));
-	}
-
-	/*
-
-	public function testThatWeCanAuthenticateUser()
-	{
-		$usuarios = $this->user->findAll();
-		$usuario = end($usuarios);
-		$usuario['username'] = 'mfteste';
-		$usuario['password'] = 'floriano.123';
-		$checarUsuario = $this->user->authenticateUser($usuario);
-		$this->assertEquals($checarUsuario[0]['id'], $usuario['id']);
-	}
-
-	
-
-	public function testThatWeCanFindAllUsers()
-	{
-		
-		$this->assertCount(2, $this->user->findAll());
-	}
-
-	/*
-
-	public function testThatWeCanFindUserById()
-	{
-		$usuarios = $this->user->findAll();
-		$id = $usuarios[0]['id'];
-		$newUser = $this->user->findById($id);
-		$this->assertArrayHasKey( 'id' , $newUser[0]);
-	}
 
 	public function testThatWeCanDeleteUser()
 	{

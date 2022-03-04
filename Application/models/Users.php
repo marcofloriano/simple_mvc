@@ -33,7 +33,6 @@ class Users
     $result = $conn->executeQuery('SELECT * FROM usuarios WHERE id = :ID LIMIT 1', array(
       ':ID' => $id
     ));
-
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
@@ -48,13 +47,6 @@ class Users
     $result = $conn->executeQuery("INSERT INTO usuarios (nome, usuario, senha, email)
 VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
     return $conn->response;    
-  }
-
-  public static function deleteLastUser()
-  {
-    $conn = new Database();
-    $result = $conn->executeQuery('DELETE FROM `usuarios` ORDER BY id DESC LIMIT 1');
-    return $conn->response;
   }
 
   public static function deleteById(int $id)
