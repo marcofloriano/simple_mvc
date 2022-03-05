@@ -10,7 +10,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		$this->user = new \Application\models\Users;
 	}
 
-	public function testFindUserById()
+	public function testDeleteUser()
 	{
 		//inserir usuario no banco de dados
 		$usuario = array();
@@ -22,16 +22,9 @@ class UserTest extends \PHPUnit\Framework\TestCase
 
     	//realizar teste
     	$usuarios = $this->user->findAll();
-    	$usuarioTeste = end($usuarios);
-    	var_dump($this->user->findById($usuarioTeste['id']));
-    	var_dump($usuarioTeste);
-    	//$this->assertEquals($usuarioTeste, $this->user->findById($usuarioTeste['id']));
-
-    	//remover usuario
-    	$this->user->deleteById($usuarioTeste['id']);
+		$usuarioTeste = end($usuarios);
+    	$this->assertTrue($this->user->deleteById($usuarioTeste['id']));
 	}
-
-	/*
 
 	public function testFindAllUsers()
 	{
@@ -49,6 +42,25 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		//remover usuario    	
     	$usuarios = $this->user->findAll();
 		$usuarioTeste = end($usuarios);
+    	$this->user->deleteById($usuarioTeste['id']);
+	}
+
+	public function testFindUserById()
+	{
+		//inserir usuario no banco de dados
+		$usuario = array();
+		$usuario['nome'] = 'Marco Teste';
+    	$usuario['usuario'] = 'marcoteste';
+    	$usuario['senha'] = 'teste';
+    	$usuario['email'] = 'marcoteste@gmail.com';
+    	$this->user->insertUser($usuario);
+
+    	//realizar teste
+    	$usuarios = $this->user->findAll();
+    	$teste[0] = $usuarioTeste = end($usuarios);
+    	$this->assertEquals($teste, $this->user->findById($usuarioTeste['id']));
+
+    	//remover usuario
     	$this->user->deleteById($usuarioTeste['id']);
 	}
 
@@ -133,17 +145,4 @@ class UserTest extends \PHPUnit\Framework\TestCase
 		//remover usuario
     	$this->user->deleteById($usuarioTeste['id']); 
 	}
-
-	/*
-
-	public function testThatWeCanDeleteUser()
-	{
-		$usuarios = $this->user->findAll();
-		$lastUser = end($usuarios);
-		$id = $lastUser['id'];
-		$this->assertTrue($this->user->deleteById($id));
-	}
-
-	*/
-
 }

@@ -52,11 +52,10 @@ VALUES ('$usuarioNome', '$usuarioUsuario', '$usuarioSenha', '$usuarioEmail')");
   public static function deleteById(int $id)
   {
     $conn = new Database();
-    if($result = $conn->executeQuery('DELETE FROM `usuarios` WHERE id = :ID LIMIT 1', array(
+    $result = $conn->executeQuery('DELETE FROM `usuarios` WHERE id = :ID LIMIT 1', array(
       ':ID' => $id
-    ))) {
-      return true;
-    }
+    ));
+    return $conn->response;
   }
 
   public static function updateUser($usuario)
