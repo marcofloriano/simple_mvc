@@ -9,44 +9,85 @@ class PostTest extends \PHPUnit\Framework\TestCase
 		$this->post = new \Application\models\Posts;
 	}
 
-	public function testThatWeCanFindAllPosts()
-	{		
+	public function testFindAllPosts()
+	{	
+		//inserir post no banco de dados
+		$post = array();
+		$post['titulo'] = "Perpétua e Felicidade";
+		$post['texto'] = "Perpétua, mulher patrícia de cerca de vinte e dois anos de idade, era mãe de uma criança de peito; Felicidade, sua escrava, estando grávida, segundo as leis devia ser conservada até dar à luz; mas, apesar das dores de parto, mostrava-se serena diante das feras. Passaram ambas do cárcere para o anfiteatro, de rosto alegre, seguras de que iam para o Céu.";
+		$this->post->insertPost($post);
+
+		//realizar teste
+		$this->assertGreaterThan(1, count($this->post->findAll()));
+
+		//remover post    	
 		$posts = $this->post->findAll();
-		foreach ($posts as $post) {
-			$this->assertArrayHasKey( 'id' ,$post);
-		}
+		$postTeste = end($posts);
+    	$this->post->deleteById($postTeste['id']); 
 	}
 
-	public function testThatWeCanFindPostById()
+	public function testFindPostById()
 	{
+		//inserir post no banco de dados
+		$post = array();
+		$post['titulo'] = "Perpétua e Felicidade";
+		$post['texto'] = "Perpétua, mulher patrícia de cerca de vinte e dois anos de idade, era mãe de uma criança de peito; Felicidade, sua escrava, estando grávida, segundo as leis devia ser conservada até dar à luz; mas, apesar das dores de parto, mostrava-se serena diante das feras. Passaram ambas do cárcere para o anfiteatro, de rosto alegre, seguras de que iam para o Céu.";
+		$this->post->insertPost($post);
+
+		//realizar teste
 		$posts = $this->post->findAll();
-		$id = $posts[0]['id'];
-		$newPost = $this->post->findById($id);
-		$this->assertArrayHasKey( 'id' , $newPost[0]);
+		$teste[0] = $postTeste = end($posts);
+		$this->assertEquals($teste, $this->post->findById($postTeste['id']));
+
+		//remover post		
+    	$this->post->deleteById($postTeste['id']);
 	}
 
-	public function testThatWeCanInsertPost()
+	public function testInsertPost()
 	{
-		$newPost = array();
-		$newPost['titulo'] = 'Santo do Dia 19 de Janeiro';
-    	$newPost['texto'] = 'Em Esmirna, hoje Izmir, na Turquia, a paixão de São Germânico, mártir de Filadélfia, que, no tempo dos imperadores Marco Antonino e Lúcio Aurélio, foi discípulo de São Policarpo, a quem precedeu no martírio: condenado pelo juiz ainda na flor da idade juvenil, superou pela graça de Deus o medo da sua fragilidade corporal e provocou espontaneamente a fera para ele preparada.';
-    	$this->assertTrue($this->post->insertPost($newPost));
+		$post = array();
+		$post['titulo'] = "Perpétua e Felicidade";
+		$post['texto'] = "Perpétua, mulher patrícia de cerca de vinte e dois anos de idade, era mãe de uma criança de peito; Felicidade, sua escrava, estando grávida, segundo as leis devia ser conservada até dar à luz; mas, apesar das dores de parto, mostrava-se serena diante das feras. Passaram ambas do cárcere para o anfiteatro, de rosto alegre, seguras de que iam para o Céu.";
+
+		//realizar teste
+    	$this->assertTrue($this->post->insertPost($post));
+
+    	//remover usuario    	
+    	$posts = $this->post->findAll();
+		$postTeste = end($posts);
+    	$this->post->deleteById($postTeste['id']);
 	}
 
-	public function testThatWeCanUpdatePost()
+	public function testUpdatePost()
 	{
+		//inserir post no banco de dados
+		$post = array();
+		$post['titulo'] = "Perpétua e Felicidade";
+		$post['texto'] = "Perpétua, mulher patrícia de cerca de vinte e dois anos de idade, era mãe de uma criança de peito; Felicidade, sua escrava, estando grávida, segundo as leis devia ser conservada até dar à luz; mas, apesar das dores de parto, mostrava-se serena diante das feras. Passaram ambas do cárcere para o anfiteatro, de rosto alegre, seguras de que iam para o Céu.";
+		$this->post->insertPost($post);
+
+		//realizar teste
 		$posts = $this->post->findAll();
-		$lastPost = end($posts);
-		$lastPost['titulo'] = 'Santo do Dia 19 de Janeiro (2)';
-		$lastPost['texto'] = 'Em Spoleto, na Úmbria, região da Itália, São Ponciano, mártir, que, no tempo do imperador Antonino, crudelissimamente flagelado por amor de Cristo, foi finalmente morto ao fio da espada.';
-		$this->assertTrue($this->post->updatePost($lastPost));
+		$postTeste = end($posts);
+		$postTeste['titulo'] = 'Sátiro, Saturnino, Revocato e Secundino';
+		$postTeste['texto'] = 'Também em Cartago, a paixão dos santos Sátiro, Saturnino, Revocato e Secundino, que morreram na mesma perseguição. O último morreu no cárcere; os outros, depois de sofrerem as investidas de várias feras, deram mutuamente o ósculo santo e sucumbiram degolados ao golpe da espada.';
+		$this->assertTrue($this->post->updatePost($postTeste));
+
+		//remover post
+		$this->post->deleteById($postTeste['id']);
 	}
 
-	public function testThatWeCanDeletePost()
+	public function testDeletePost()
 	{
+		//inserir post no banco de dados
+		$post = array();
+		$post['titulo'] = "Perpétua e Felicidade";
+		$post['texto'] = "Perpétua, mulher patrícia de cerca de vinte e dois anos de idade, era mãe de uma criança de peito; Felicidade, sua escrava, estando grávida, segundo as leis devia ser conservada até dar à luz; mas, apesar das dores de parto, mostrava-se serena diante das feras. Passaram ambas do cárcere para o anfiteatro, de rosto alegre, seguras de que iam para o Céu.";
+		$this->post->insertPost($post);
+
+		//realizar teste
 		$posts = $this->post->findAll();
-		$lastPost = end($posts);
-		$id = $lastPost['id'];
-		$this->assertTrue($this->post->deleteById($id));
+		$postTeste = end($posts);
+    	$this->assertTrue($this->post->deleteById($postTeste['id']));
 	}
 }
