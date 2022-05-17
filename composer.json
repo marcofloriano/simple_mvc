@@ -1,4 +1,3 @@
-// rodar [ composer dump-autoload ] após confgiurar pela primeira vez
 {
     "autoload": {
         "classmap": [
